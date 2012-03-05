@@ -1,1 +1,5 @@
 henteko vim settings
+
+set:
+ln -s ~/dotfiles_vim/_vimrc ~/.vimrc
+ln -s ~/dotfiles_vim/vimfiles ~/.vim
