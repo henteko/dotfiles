@@ -45,7 +45,7 @@ set laststatus=2 "ステータスラインを常に表示
 " プログラミングヘルプ系
 "#######################
 syntax on "カラー表示
-"set smartindent "オートインデント
+set smartindent "オートインデント
 " tab関連
 set expandtab "タブの代わりに空白文字挿入
 set ts=4 sw=4 sts=0 "タブは半角4文字分のスペース
