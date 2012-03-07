@@ -3,7 +3,11 @@ henteko vim settings
 set:
 $ git clone http://github.com/gmarik/vundle.git ~/dotfiles_vim/vimfiles/vundle.git
 
-$ make -f ~/dotfiles_vim/vimfiles/bundle/vimproc/make_mac.mak
-
 $ ln -s ~/dotfiles_vim/_vimrc ~/.vimrc
 $ ln -s ~/dotfiles_vim/vimfiles ~/.vim
+
+vim -> :BundleInstall
+
+$ make -f ~/dotfiles_vim/vimfiles/bundle/vimproc/make_mac.make
+
+
