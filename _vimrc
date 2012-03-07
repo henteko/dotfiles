@@ -115,7 +115,7 @@ endif
 
 let g:quickrun_config["_"] = {
     \ "runner/vimproc/updatetime" : 80,
-    \ "outputter/buffer/split" : ":rightbelow 30sp",
+    \ "outputter/buffer/split" : ":rightbelow 15sp",
     \ "outputter/error/error" : "buffer",
     \ "outputter/error/success" : "buffer",
     \ "outputter" : "error",
