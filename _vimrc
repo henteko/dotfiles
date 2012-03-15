@@ -48,6 +48,7 @@ augroup cch
 autocmd! cch
 autocmd WinLeave * set nocursorline
 autocmd WinEnter,BufRead * set cursorline
+autocmd FileType * setlocal formatoptions-=ro
 augroup END
 :hi clear CursorLine
 :hi CursorLine gui=underline
@@ -105,6 +106,18 @@ inoremap <expr><BS> neocomplcache#smart_close_popup() . "\<C-h>"
 inoremap <expr><C-y> neocomplcache#close_popup()
 inoremap <expr><C-e> neocomplcache#cancel_popup()
 
+"####################
+" VimShell系
+"####################
+",is:VimShell起動
+nnoremap <silent> ,vs :VimShell<CR>
+",igs:goshを非同期起動
+nnoremap <silent> ,vg :VimShellInteractive gosh<CR>
+",ss:非同期で開いたインタプリンタに現在の行を実行
+vmap <silent> ,ss :VimShellSendString<CR>
+"選択中に,ss:非同期で開いたインタプリンタに選択行を評価させる
+nnoremap <silent> ,ss <S-v>:VimShellSendString<CR>
+
 
 "#####################
 " quickrun系
@@ -115,7 +128,7 @@ endif
 
 let g:quickrun_config["_"] = {
     \ "runner/vimproc/updatetime" : 80,
-    \ "outputter/buffer/split" : ":rightbelow 30sp",
+    \ "outputter/buffer/split" : ":rightbelow 15sp",
     \ "outputter/error/error" : "buffer",
     \ "outputter/error/success" : "buffer",
     \ "outputter" : "error",
