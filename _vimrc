@@ -19,6 +19,7 @@ Bundle "Shougo/vimshell"
 Bundle "dannyob/quickfixstatus"
 Bundle "jceb/vim-hier"
 Bundle "scrooloose/nerdtree"
+Bundle "mattn/sonictemplate-vim"
  
 " github 以外のリポジトリ (3)
 " Bundle "git://git.wincent.com/command-t.git"
