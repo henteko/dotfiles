@@ -10,4 +10,9 @@ vim -> :BundleInstall
 
 $ make -f ~/dotfiles_vim/vimfiles/bundle/vimproc/make_mac.make
 
+vim-latex setting for mac
+$ sudo port -d selfupdate
+$ sudo port -d sync
 
+pTex install
+$ sudo port install pTeX +hiragino +otf +utf8 +motif +macosx

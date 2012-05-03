@@ -20,7 +20,8 @@ Bundle "dannyob/quickfixstatus"
 Bundle "jceb/vim-hier"
 Bundle "scrooloose/nerdtree"
 Bundle "mattn/sonictemplate-vim"
- 
+Bundle "jcf/vim-latex" 
+
 " github 以外のリポジトリ (3)
 " Bundle "git://git.wincent.com/command-t.git"
  
@@ -173,3 +174,36 @@ endfunction
 noremap <c-e> :<c-u>:call ExecuteNERDTree()<cr>
 
 
+""""""""""""""""""""
+" vim-latex関係
+""""""""""""""""""""
+
+filetype plugin on
+filetype indent on
+set shellslash
+set grepprg=grep\ -nH\ $*
+
+" コンパイル時に使用するコマンド
+"let g:Tex_CompileRule_dvi = 'platex --interaction=nonstopmode $*' 
+let g:Tex_BibtexFlavor = 'jbibtex'
+"let g:Tex_CompileRule_pdf = 'dvipdfmx $*.dvi'
+
+" ファイルのビューワー
+let g:Tex_ViewRule_dvi = 'xdvi'
+"let g:Tex_ViewRule_pdf = 'evince'
+let g:tex_flavor='latex'
+
+let g:Tex_ViewRule_pdf = 'open -a /Applications/Preview.app'
+let g:Tex_FormatDependency_pdf = 'dvi,pdf'
+let g:Tex_CompileRule_pdf = '/opt/local/bin/dvipdfmx $*.dvi'
+"let g:Tex_CompileRule_dvi = '/opt/local/bin/platex-sjis --interaction-nonstopmode $*'
+let g:Tex_IgnoredWarnings =
+      \"Underfull\n".
+      \"Overfull\n".
+      \"specifier changed to\n".
+      \"You have requested\n".
+      \"Missing number, treated as zero.\n".
+      \"There were undefined references\n".
+      \"Citation %.%# undefined\n".
+      \'LaTeX Font Warning:'"
+let g:Tex_IgnoreLevel = 8
