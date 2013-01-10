@@ -11,6 +11,8 @@ source /Users/pepe_air/perl5/perlbrew/etc/bashrc
 
 export PATH=/usr/local/sbin:$PATH
 
+export PATH=${HOME}/.cabal/bin:$PATH
+
 ## 履歴の保存先
 HISTFILE=$HOME/.zsh-history
 ## メモリに展開する履歴の数
