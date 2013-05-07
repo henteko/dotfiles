@@ -21,6 +21,13 @@ Bundle "jceb/vim-hier"
 Bundle "scrooloose/nerdtree"
 Bundle "mattn/sonictemplate-vim"
 Bundle "jcf/vim-latex" 
+" syntax + 自動compile
+Bundle 'kchmck/vim-coffee-script'
+" js BDDツール
+Bundle 'claco/jasmine.vim'
+" indentの深さに色を付ける
+Bundle 'nathanaelkane/vim-indent-guides'
+
 
 " github 以外のリポジトリ (3)
 " Bundle "git://git.wincent.com/command-t.git"
@@ -67,9 +74,10 @@ syntax on "カラー表示
 set smartindent "オートインデント
 " tab関連
 set expandtab "タブの代わりに空白文字挿入
-set ts=4 sw=4 sts=0 "タブは半角4文字分のスペース
+set ts=2 sw=2 sts=0 "タブは半角4文字分のスペース
 set list!
 set listchars=tab:>-
+set shiftwidth=2
 " ファイルを開いた際に、前回終了時の行で起動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe
 "normal g`\"" | endif
@@ -213,3 +221,53 @@ let g:Tex_IgnoredWarnings =
       \'LaTeX Font Warning:'"
 let g:Tex_IgnoreLevel = 8
 
+" vimにcoffeeファイルタイプを認識させる
+au BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
+" インデントを設定
+autocmd FileType coffee     setlocal sw=2 sts=2 ts=2 et
+
+" taglistの設定 coffeeを追加
+" let g:tlist_coffee_settings = 'coffee;f:function;v:variable'
+
+" QuickRunのcoffee
+" let g:quickrun_config['coffee'] = {
+"      \'command' : 'coffee',
+"      \'exec' : ['%c -cbp %s']
+"      \}
+
+"------------------------------------
+" vim-coffee-script
+"------------------------------------
+" 保存時にコンパイル
+autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
+
+"------------------------------------
+" jasmine.vim
+"------------------------------------
+" ファイルタイプを変更
+function! JasmineSetting()
+  au BufRead,BufNewFile *Helper.js,*Spec.js  set filetype=jasmine.javascript
+  au BufRead,BufNewFile *Helper.coffee,*Spec.coffee  set filetype=jasmine.coffee
+  au BufRead,BufNewFile,BufReadPre *Helper.coffee,*Spec.coffee  let b:quickrun_config = {'type' : 'coffee'}
+  call jasmine#load_snippets()
+  map <buffer> <leader>m :JasmineRedGreen<CR>
+  command! JasmineRedGreen :call jasmine#redgreen()
+  command! JasmineMake :call jasmine#make()
+endfunction
+au BufRead,BufNewFile,BufReadPre *.coffee,*.js call JasmineSetting()
+
+"------------------------------------
+" indent_guides
+"------------------------------------
+" インデントの深さに色を付ける
+let g:indent_guides_start_level=2
+let g:indent_guides_auto_colors=0
+let g:indent_guides_enable_on_vim_startup=0
+let g:indent_guides_color_change_percent=20
+let g:indent_guides_guide_size=1
+let g:indent_guides_space_guides=1
+
+hi IndentGuidesOdd  ctermbg=235
+hi IndentGuidesEven ctermbg=237
+au FileType coffee,ruby,javascript,python IndentGuidesEnable
+nmap <silent><Leader>ig <Plug>IndentGuidesToggle
