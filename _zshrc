@@ -16,8 +16,12 @@ export PATH=${HOME}/.cabal/bin:$PATH
 export ANDROID_HOME=~/android-sdks/
 export PATH=$PATH:~/android-sdks/platform-tools
 export PATH=$PATH:~/android-sdks/tools
+export PATH=$PATH:~/android-sdks/build-tools/17.0.0
 
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home/
+
+[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
+export PATH=$HOME/.pythonz/pythons/CPython-3.3.2/bin:$PATH
 
 ## 履歴の保存先
 HISTFILE=$HOME/.zsh-history
@@ -103,10 +107,14 @@ setopt list_packed
 setopt noautoremoveslash
 
 #ruby 1.9.2
-rvm use 1.9.2
+#rvm use 1.9.2
 
 #gitのbranch表示のやつ
 source /usr/local/Cellar/git/1.7.11.4/etc/bash_completion.d/git-completion.bash
+
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+export PATH=$HOME/.rbenv/shims:$PATH
 
 ### Prompt ###
 # プロンプトに色を付ける
@@ -128,3 +136,8 @@ fi
 PROMPT=$tmp_prompt    # 通常のプロンプト
 PROMPT2=$tmp_prompt2  # セカンダリのプロンプト(コマンドが2行以上の時に表示される)
 SPROMPT=$tmp_sprompt  # スペル訂正用プロンプト
+
+#THIS MUST BE AT THE END OF THE FILE FOR GVM TO WORK!!!
+[[ -s "/Users/pepe_air/.gvm/bin/gvm-init.sh" ]] && source "/Users/pepe_air/.gvm/bin/gvm-init.sh"
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
