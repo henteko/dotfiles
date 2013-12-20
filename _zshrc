@@ -1,6 +1,6 @@
 export LANG=ja_JP.UTF-8
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
+# [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
 export CC=/usr/bin/gcc-4.2
 
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
@@ -21,7 +21,11 @@ export PATH=$PATH:~/android-sdks/build-tools/17.0.0
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home/
 
 [[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
-export PATH=$HOME/.pythonz/pythons/CPython-3.3.2/bin:$PATH
+#export PATH=$HOME/.pythonz/pythons/CPython-3.3.2/bin:$PATH
+
+export GOPATH=$HOME/_go
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:/usr/local/go/bin
 
 ## 履歴の保存先
 HISTFILE=$HOME/.zsh-history
@@ -140,4 +144,15 @@ SPROMPT=$tmp_sprompt  # スペル訂正用プロンプト
 #THIS MUST BE AT THE END OF THE FILE FOR GVM TO WORK!!!
 [[ -s "/Users/pepe_air/.gvm/bin/gvm-init.sh" ]] && source "/Users/pepe_air/.gvm/bin/gvm-init.sh"
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+# PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+# added by travis gem
+source /Users/pepe_air/.travis/travis.sh
+
+# pvm setting
+. ~/bin/pvm/pvm.sh
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+source ~/.nvm/nvm.sh
