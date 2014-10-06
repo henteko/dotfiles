@@ -4,37 +4,45 @@
 set nocompatible
 filetype off
  
-set rtp+=~/.vim/vundle.git/
-call vundle#rc()
- 
-" vim-scripts リポジトリ (1)
-" Bundle "rails.vim"
-Bundle 'scala.vim'
- 
-" github の任意のリポジトリ (2)
-" Bundle "tpope/vim-fugitive"
-Bundle "Shougo/neocomplcache"
-Bundle "thinca/vim-quickrun"
-Bundle "Shougo/vimproc"
-Bundle "Shougo/vimshell"
-Bundle "dannyob/quickfixstatus"
-Bundle "jceb/vim-hier"
-Bundle "scrooloose/nerdtree"
-Bundle "mattn/sonictemplate-vim"
-Bundle "jcf/vim-latex" 
-" syntax + 自動compile
-Bundle 'kchmck/vim-coffee-script'
-" js BDDツール
-Bundle 'claco/jasmine.vim'
-" indentの深さに色を付ける
-Bundle 'nathanaelkane/vim-indent-guides'
+set rtp+=~/dotfiles/neobundle.vim
+if has('vim_starting')
+  set runtimepath+=~/dotfiles/neobundle.vim
+  call neobundle#rc(expand('~/.vim/'))
+endif
+     
+NeoBundle 'scala.vim'
+NeoBundle "Shougo/neocomplcache"
+NeoBundle "thinca/vim-quickrun"
+NeoBundle "Shougo/vimshell"
+NeoBundle "dannyob/quickfixstatus"
+NeoBundle "jceb/vim-hier"
+NeoBundle "scrooloose/nerdtree"
+NeoBundle "mattn/sonictemplate-vim"
+NeoBundle "jcf/vim-latex" 
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'claco/jasmine.vim'
+NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'Shougo/vimproc', {
+      \ 'build' : {
+      \   'windows' : 'echo "Sorry, cannot update vimproc binary file in Windows."',
+      \   'cygwin' : 'make -f make_cygwin.mak',
+      \   'mac' : 'make -f make_mac.mak',
+      \   'unix' : 'make -f make_unix.mak',
+      \ }}
 
-" Bundle 'Floobits/floobits-vim'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'marijnh/tern_for_vim'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'wookiehangover/jshint.vim'
 
+NeoBundle 'szw/vim-tags'
+NeoBundle 'basyura/unite-rails'
+NeoBundle 'tpope/vim-rails'
 
-" github 以外のリポジトリ (3)
-" Bundle "git://git.wincent.com/command-t.git"
- 
+NeoBundle 'rking/ag.vim'
+  
 filetype plugin indent on
 
 "##########################################
@@ -229,7 +237,7 @@ let g:Tex_IgnoreLevel = 8
 " go setttings
 filetype off
 filetype plugin indent off
-set runtimepath+=/usr/local/go/misc/vim
+set runtimepath+=/usr/local/Cellar/go/1.3/libexec/misc/vim
 au FileType go setlocal sw=4 ts=4 sts=4 noet
 au BufWritePre *.go Fmt
 filetype plugin indent on
@@ -242,3 +250,102 @@ autocmd BufRead,BufNewFile *.scala set filetype=scala
 au BufRead,BufNewFile *.gradle set filetype=groovy
 au BufRead,BufNewFile *.groovy set filetype=groovy
 au FileType groovy setlocal sw=4 ts=4 sts=4
+
+" perl lang 
+filetype off
+filetype plugin indent off
+au FileType perl setlocal sw=4 ts=4 sts=4
+filetype plugin indent on
+syntax on
+
+"" ===============================================
+"" set Leader
+"" ===============================================
+
+let mapleader=" "
+
+"" --------------------------------------------------
+"" unite
+"" --------------------------------------------------
+let g:unite_enable_start_insert      = 1
+let g:unite_winheight                = "10"
+let g:unite_winwidth                 = "35"
+""let g:unite_source_grep_default_opts = '-iRHn --color=none'
+let g:unite_source_grep_default_opts = '-iHRn'
+let g:unite_source_session_options   = &sessionoptions
+
+" unite mapping
+nnoremap <Leader>u: :Unite 
+nnoremap <silent> <Leader>ub :<C-u>Unite buffer<CR> 
+nnoremap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
+nnoremap <silent> <Leader>ur :<C-u>Unite -buffer-name=register register<CR>
+nnoremap <silent> <Leader>us :<C-u>Unite file_mru<CR>
+nnoremap <silent> <Leader>ua :<C-u>Unite buffer file_mru bookmark tab<CR>
+nnoremap <silent> <Leader>uy :<C-u>Unite history/yank<CR> 
+nnoremap <silent> <Leader>uo :<C-u>Unite outline -vertical<CR>
+nnoremap <silent> <Leader>um :<C-u>Unite mark<CR>
+nnoremap <silent> <Leader>uc :<C-u>Unite command<CR>
+nnoremap <silent> <Leader>ut :<C-u>Unite tab<CR>
+nnoremap <silent> <leader>ug :<C-u>Unite grep:%<CR>
+
+call unite#custom_default_action('file', 'above')
+call unite#custom_default_action('file_mru', 'above')
+call unite#custom_default_action('file/new', 'above')
+call unite#custom_default_action('buffer', 'above')
+call unite#custom_default_action('tab', 'above')
+call unite#custom_default_action('bookmark', 'above')
+call unite#custom_default_action('command', 'above')
+call unite#custom_default_action('mark', 'above')
+
+augroup UniteWindowKeyMaps
+  autocmd!
+  autocmd FileType unite noremap <silent><buffer><expr> <C-j> unite#do_action('split')
+  autocmd FileType unite noremap <silent><buffer><expr> <C-l> unite#do_action('vsplit')
+  autocmd FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
+  autocmd FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
+  autocmd FileType unite call UnmapAltKeys()
+augroup END
+
+function! UnmapAltKeys()
+  " almost for unite to avoid Alt keys does not fire normal <Esc>
+  " noremap <Esc> to avoid <Esc>* mappings fired
+  inoremap <buffer> <silent> <Plug>(esc) <Esc>
+  imap <buffer> <Esc>t <Plug>(esc)t
+  imap <buffer> <Esc>t <Plug>(esc)t
+endfunction
+
+
+"------------------------------------
+"" Unite-rails.vim
+"------------------------------------
+nnoremap <silent> <Leader>urv :<C-u>Unite rails/view<CR>
+nnoremap <silent> <Leader>urm :<C-u>Unite rails/model<CR>
+nnoremap <silent> <Leader>urc :<C-u>Unite rails/controller<CR>
+
+nnoremap <silent> <Leader>urcon :<C-u>Unite rails/config<CR>
+nnoremap <silent> <Leader>urs :<C-u>Unite rails/spec<CR>
+nnoremap <silent> <Leader>urg ':e '.b:rails_root.'/Gemfile<CR>'
+nnoremap <silent> <Leader>urr ':e '.b:rails_root.'/config/routes.rb<CR>'
+
+" カーソル位置の単語をgrep検索
+nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
+" grep検索
+nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+
+" unite grep に ag(The Silver Searcher) を使う
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
+
+"-----------------------------------
+"" vim tags
+"-----------------------------------
+let g:vim_tags_project_tags_command = "/usr/local/Cellar/ctags/5.8/bin/ctags -f .tags -R {OPTIONS} {DIRECTORY} 2>/dev/null &"
+let g:vim_tags_gems_tags_command = "/usr/local/Cellar/ctags/5.8/bin/ctags -R -f .Gemfile.lock.tags `bundle show --paths` 2>/dev/null &"
+set tags+=.tags
+set tags+=.Gemfile.lock.tags
+
+" vim ctags
+nnoremap <silent> <Leader><C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>

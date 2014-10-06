@@ -1,0 +1,23 @@
+[alias]
+	s = status --short --branch
+	d = diff
+	dc = diff --cached
+	co = commit
+  ht   = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	lf = log --follow -p
+[core]
+	editor = vim
+  excludesfile = ~/.gitignore
+[user]
+	name = henteko
+	email = henteko07@gmail.com
+
+#driver for merging XCode project files
+[merge "mergepbx"]
+  name = XCode project files merger
+  driver = mergepbx %O %A %B
+
+[url "mixi.github.com"]
+  insteadOf = git://git@github.lo.mixi.jp
+[merge]
+	tool = vimdiff
