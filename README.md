@@ -4,6 +4,7 @@ henteko dotfiles settings
 ```
 $ git clone https://github.com/Shougo/neobundle.vim ~/dotfiles/neobundle.vim
 $ ln -s ~/dotfiles/_vimrc ~/.vimrc
+$ ln -s ~/dotfiles/vimfiles ~/.vim
 # vim -> :NeoBundleInstall
 $ make -f ~/.vim/vimproc/make_unix.make
 ```
