@@ -321,6 +321,8 @@ endfunction
 nnoremap <silent> <Leader>urv :<C-u>Unite rails/view<CR>
 nnoremap <silent> <Leader>urm :<C-u>Unite rails/model<CR>
 nnoremap <silent> <Leader>urc :<C-u>Unite rails/controller<CR>
+nnoremap <silent> <Leader>ura :<C-u>Unite rails/asset<CR>
+nnoremap <silent> <Leader>urh :<C-u>Unite rails/helper<CR>
 
 nnoremap <silent> <Leader>urcon :<C-u>Unite rails/config<CR>
 nnoremap <silent> <Leader>urs :<C-u>Unite rails/spec<CR>
