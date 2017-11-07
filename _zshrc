@@ -12,20 +12,29 @@ export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/sbin:$PATH
 
 export PATH=${HOME}/.cabal/bin:$PATH
+export PATH="$HOME/Library/Haskell/bin:$PATH"
 
-export ANDROID_HOME=~/android-sdks/
-export PATH=$PATH:~/android-sdks/platform-tools
-export PATH=$PATH:~/android-sdks/tools
-export PATH=$PATH:~/android-sdks/build-tools/android-4.4.2
+export ANDROID_HOME=/Users/henteko/Library/Android/sdk/
+export ANDROID_NDK=$ANDROID_HOME/ndk-bundle
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/build-tools/21.1.1
+export PATH=$PATH:$ANDROID_NDK
 
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home/
+#export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
+#export JAVA_HOME=/opt/homebrew-cask/Caskroom/android-studio/2.2.0/Android\ Studio.app/Contents/jre/jdk/Contents/Home
+export BAZEL_HOME="$HOME/.bazel"
+export PATH="$PATH:$BAZEL_HOME/bin"
 
-[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
+#[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
 #export PATH=$HOME/.pythonz/pythons/CPython-3.3.2/bin:$PATH
 
-export GOPATH=$HOME/_go
+export GOROOT=/usr/local/opt/go/libexec
+export GOPATH=$HOME/Desktop/dev/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/usr/local/go/bin
+
+export PATH="$HOME/.cargo/bin:$PATH"
 
 ## 履歴の保存先
 HISTFILE=$HOME/.zsh-history
@@ -112,7 +121,7 @@ setopt list_packed
 setopt noautoremoveslash
 
 #gitのbranch表示のやつ
-source /usr/local/Cellar/git/1.9.1/etc/bash_completion.d/git-prompt.sh
+source /usr/local/Cellar/git/2.3.3/etc/bash_completion.d/git-prompt.sh
 
 ### Prompt ###
 # プロンプトに色を付ける
@@ -143,8 +152,16 @@ if [ -d ${HOME}/.anyenv ] ; then
   for D in `ls $HOME/.anyenv/envs`
   do
     export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
+
+    #if [ -d ${HOME}/.anyenv/envs/ndenv ] ; then
+    #  for NV in `node -v`
+    #  do
+    #    export PATH="$HOME/.anyenv/envs/ndenv/versions/$NV/bin:$PATH"
+    #  done
+    #fi
   done
 fi
+export PATH="/opt/chefdk/bin:$PATH"
 
 # D lang
 export PATH=~/dmd2/osx/bin:$PATH
@@ -162,7 +179,17 @@ function helper() {
 }
 
 alias gcp="helper 'git branch | peco | xargs git checkout'"
-alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
+alias disk_scan="du -md1 | sort -nk1"
 
-alias tag="/usr/local/Cellar/ctags/5.8/bin/ctags -f .tags -R"
-alias gtag="/usr/local/Cellar/ctags/5.8/bin/ctags -R -f .Gemfile.lock.tags `bundle show --paths`"
+# added by travis gem
+[ -f /Users/henteko/.travis/travis.sh ] && source /Users/henteko/.travis/travis.sh
+
+# The next line updates PATH for the Google Cloud SDK.
+# source '/Users/henteko/google-cloud-sdk/path.zsh.inc'
+
+# The next line enables shell command completion for gcloud.
+# source '/Users/henteko/google-cloud-sdk/completion.zsh.inc'
+
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+
+export PATH="$HOME/anaconda/bin:$PATH"

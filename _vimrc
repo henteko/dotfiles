@@ -7,7 +7,9 @@ filetype off
 set rtp+=~/dotfiles/neobundle.vim
 if has('vim_starting')
   set runtimepath+=~/dotfiles/neobundle.vim
-  call neobundle#rc(expand('~/.vim/'))
+  call neobundle#begin(expand('~/.vim/bundle/'))
+  NeoBundleFetch 'Shougo/neobundle.vim'
+  call neobundle#end()
 endif
      
 NeoBundle 'scala.vim'
@@ -16,7 +18,6 @@ NeoBundle "thinca/vim-quickrun"
 NeoBundle "Shougo/vimshell"
 NeoBundle "dannyob/quickfixstatus"
 NeoBundle "jceb/vim-hier"
-NeoBundle "scrooloose/nerdtree"
 NeoBundle "mattn/sonictemplate-vim"
 NeoBundle "jcf/vim-latex" 
 NeoBundle 'kchmck/vim-coffee-script'
@@ -31,7 +32,6 @@ NeoBundle 'Shougo/vimproc', {
       \ }}
 
 NeoBundle 'scrooloose/syntastic'
-NeoBundle 'marijnh/tern_for_vim'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
@@ -128,10 +128,10 @@ inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
 "" <TAB>: completion.
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 "" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup() . "\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup() . "\<C-h>"
-inoremap <expr><C-y> neocomplcache#close_popup()
-inoremap <expr><C-e> neocomplcache#cancel_popup()
+"inoremap <expr><C-h> neocomplcache#smart_close_popup() . "\<C-h>"
+"inoremap <expr><BS> neocomplcache#smart_close_popup() . "\<C-h>"
+"inoremap <expr><C-y> neocomplcache#close_popup()
+"inoremap <expr><C-e> neocomplcache#cancel_popup()
 
 "####################
 " VimShell系
@@ -160,43 +160,6 @@ let g:quickrun_config["_"] = {
     \ "outputter/error/success" : "buffer",
     \ "outputter" : "error",
     \ }
-
-
-""""""""""""""""""""""""""""""""""""
-" The NERDTree系設定
-""""""""""""""""""""""""""""""""""""
-
-" 引数なしで実行したとき、NERDTreeを実行する
-let file_name = expand("%:p")
-if has('vim_starting') &&  file_name == ""
-    autocmd VimEnter * call ExecuteNERDTree()
-endif
-
-" カーソルが外れているときは自動的にnerdtreeを隠す
-function! ExecuteNERDTree()
-    "b:nerdstatus = 1 : NERDTree 表示中
-    "b:nerdstatus = 2 : NERDTree 非表示中
-
-    if !exists('g:nerdstatus')
-        execute 'NERDTree ./'
-        let g:windowWidth = winwidth(winnr())
-        let g:nerdtreebuf = bufnr('')
-        let g:nerdstatus = 1 
-
-    elseif g:nerdstatus == 1 
-        execute 'wincmd t'
-        execute 'vertical resize' 0 
-        execute 'wincmd p'
-        let g:nerdstatus = 2 
-    elseif g:nerdstatus == 2 
-        execute 'wincmd t'
-        execute 'vertical resize' g:windowWidth
-        let g:nerdstatus = 1 
-
-    endif
-endfunction
-noremap <c-e> :<c-u>:call ExecuteNERDTree()<cr>
-
 
 """"""""""""""""""""
 " vim-latex関係
@@ -288,14 +251,20 @@ nnoremap <silent> <Leader>uc :<C-u>Unite command<CR>
 nnoremap <silent> <Leader>ut :<C-u>Unite tab<CR>
 nnoremap <silent> <leader>ug :<C-u>Unite grep:%<CR>
 
-call unite#custom_default_action('file', 'above')
-call unite#custom_default_action('file_mru', 'above')
-call unite#custom_default_action('file/new', 'above')
-call unite#custom_default_action('buffer', 'above')
-call unite#custom_default_action('tab', 'above')
-call unite#custom_default_action('bookmark', 'above')
-call unite#custom_default_action('command', 'above')
-call unite#custom_default_action('mark', 'above')
+let s:bundle = neobundle#get("unite.vim")
+function! s:bundle.hooks.on_source(bundle)
+  let g:unite_source_file_mru_limit = 300
+  let g:unite_kind_jump_list_after_jump_scroll=0
+  call unite#custom_default_action('file', 'above')
+  call unite#custom_default_action('file_mru', 'above')
+  call unite#custom_default_action('file/new', 'above')
+  call unite#custom_default_action('buffer', 'above')
+  call unite#custom_default_action('tab', 'above')
+  call unite#custom_default_action('bookmark', 'above')
+  call unite#custom_default_action('command', 'above')
+  call unite#custom_default_action('mark', 'above')
+endfunction
+unlet s:bundle
 
 augroup UniteWindowKeyMaps
   autocmd!
