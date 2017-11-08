@@ -11,6 +11,7 @@ $ make -f ~/.vim/vimproc/make_unix.make
 
 # tmux
 ```
+$ brew install reattach-to-user-namespace
 $ ln -s ~/dotfiles/_tmux.conf ~/.tmux.conf
 ```
 

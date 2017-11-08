@@ -121,7 +121,7 @@ setopt list_packed
 setopt noautoremoveslash
 
 #gitのbranch表示のやつ
-source /usr/local/Cellar/git/2.3.3/etc/bash_completion.d/git-prompt.sh
+source /usr/local/Cellar/git/2.15.0/etc/bash_completion.d/git-prompt.sh
 
 ### Prompt ###
 # プロンプトに色を付ける
