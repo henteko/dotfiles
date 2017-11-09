@@ -17,6 +17,7 @@ $ ln -s ~/dotfiles/_tmux.conf ~/.tmux.conf
 
 # zsh
 ```
+$ brew install peco
 $ ln -s ~/dotfiles/_zshrc ~/.zshrc
 ```
 
