@@ -18,23 +18,28 @@ export ANDROID_HOME=/Users/henteko/Library/Android/sdk/
 export ANDROID_NDK=$ANDROID_HOME/ndk-bundle
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/build-tools/21.1.1
+export PATH=$PATH:$ANDROID_HOME/build-tools/28.0.3
 export PATH=$PATH:$ANDROID_NDK
 
-#export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
-#export JAVA_HOME=/opt/homebrew-cask/Caskroom/android-studio/2.2.0/Android\ Studio.app/Contents/jre/jdk/Contents/Home
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+export GROOVY_HOME=/usr/local/opt/groovy/libexec
 export BAZEL_HOME="$HOME/.bazel"
 export PATH="$PATH:$BAZEL_HOME/bin"
 
 #[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
 #export PATH=$HOME/.pythonz/pythons/CPython-3.3.2/bin:$PATH
 
-export GOROOT=/usr/local/opt/go/libexec
-export GOPATH=$HOME/Desktop/dev/go
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:/usr/local/go/bin
+export PYTHONPATH=$PYTHONPATH:/Applications/Autodesk/FBX\ Python\ SDK/2019.5/lib/Python27_ub
+
+# macのinstallerで入れたので要らなくなった
+#export GOROOT=/usr/local/opt/go/libexec
+#export GOPATH=$HOME/Desktop/dev/go
+#export PATH=$PATH:$GOPATH/bin
+#export PATH=$PATH:/usr/local/go/bin
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+export PATH="$HOME/flutter/bin:$PATH"
 
 ## 履歴の保存先
 HISTFILE=$HOME/.zsh-history
@@ -121,7 +126,7 @@ setopt list_packed
 setopt noautoremoveslash
 
 #gitのbranch表示のやつ
-source /usr/local/Cellar/git/2.15.0/etc/bash_completion.d/git-prompt.sh
+source /usr/local/Cellar/git/2.30.2/etc/bash_completion.d/git-prompt.sh
 
 ### Prompt ###
 # プロンプトに色を付ける
@@ -206,3 +211,20 @@ zle -N peco-history-selection
 bindkey '^R' peco-history-selection
 
 eval "$(direnv hook zsh)"
+
+source /Users/henteko/google-cloud-sdk/completion.zsh.inc
+source /Users/henteko/google-cloud-sdk/path.zsh.inc
+
+# Setup Compiler paths for readline and openssl
+local READLINE_PATH=$(brew --prefix readline)
+local OPENSSL_PATH=$(brew --prefix openssl)
+export LDFLAGS="-L$READLINE_PATH/lib -L$OPENSSL_PATH/lib"
+export CPPFLAGS="-I$READLINE_PATH/include -I$OPENSSL_PATH/include"
+export PKG_CONFIG_PATH="$READLINE_PATH/lib/pkgconfig:$OPENSSL_PATH/lib/pkgconfig"
+
+# Use the OpenSSL from Homebrew instead of ruby-build
+# Note: the Homebrew version gets updated, the ruby-build version doesn't
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$OPENSSL_PATH"
+
+# Place openssl@1.1 at the beginning of your PATH (preempt system libs)
+export PATH=$OPENSSL_PATH/bin:$PATH
